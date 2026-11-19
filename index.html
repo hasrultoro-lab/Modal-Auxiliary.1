@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Modal Untuk Anak Chicago</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+        .container { max-width: 850px; margin: 0 auto; }
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.2);
+            text-align: center;
+        }
+        header h1 { font-size: 1.8rem; margin-bottom: 8px; letter-spacing: -0.5px; }
+        header p { color: #cbd5e1; font-size: 0.95rem; }
+        .badge-group { display: flex; justify-content: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+        .badge { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+
+        .card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; } }
+        label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--secondary); }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--primary-light); }
+
+        .question-item {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            background: #fcfcfd;
+        }
+        .q-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .q-num { font-weight: 700; color: var(--primary); }
+        .q-tag { font-size: 0.75rem; background: #e0e7ff; color: var(--primary); padding: 2px 8px; border-radius: 6px; font-weight: 600; }
+        .q-text { font-weight: 500; font-size: 1.02rem; margin-bottom: 12px; color: var(--secondary); }
+
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.15s;
+            font-weight: 400;
+        }
+        .option-label:hover { background: #f1f5f9; border-color: #cbd5e1; }
+        .option-label input { accent-color: var(--primary); width: 16px; height: 16px; }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #1e40af; }
+        .btn-secondary { background: var(--secondary); margin-top: 10px; }
+        .btn-secondary:hover { background: #1e293b; }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #059669; }
+
+        .link-box {
+            background: #eff6ff;
+            border: 1.5px dashed var(--primary-light);
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 16px;
+            word-break: break-all;
+        }
+        .link-box code { display: block; background: white; padding: 10px; border-radius: 6px; margin: 10px 0; font-size: 0.85rem; color: var(--primary); border: 1px solid #bfdbfe; }
+        .hidden { display: none; }
+
+        /* Tutor Review Styles */
+        .review-card { border-left: 4px solid var(--primary); }
+        .ans-box { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; margin: 8px 0; font-size: 0.95rem; }
+        .key-box { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; font-size: 0.9rem; }
+        .score-control { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+        .score-control input[type="number"] { width: 80px; padding: 8px; }
+        .tutor-banner { background: #fef3c7; border: 1px solid #f59e0b; color: #92400e; padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; font-weight: 600; text-align: center; }
+        .result-banner { background: linear-gradient(135deg, #065f46, #10b981); color: white; padding: 24px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        .result-score { font-size: 2.5rem; font-weight: 800; margin: 8px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Latihan Modal Untuk Anak Chicago</h1>
+        <p>Evaluasi Pemahaman Modal Present, Past, Passive, &amp; Similar Expression of Modal (SEOM)</p>
+        <div class="badge-group">
+            <span class="badge">Level: B1 Intermediate</span>
+            <span class="badge">10 Pilihan Ganda</span>
+            <span class="badge">10 Terjemahan</span>
+            <span class="badge">Manual Tutor Review</span>
+        </div>
+    </header>
+
+    <!-- MODE 1: STUDENT EXAM VIEW -->
+    <div id="student-view">
+        <div class="card">
+            <div class="section-title"><span>Data Peserta</span></div>
+            <div class="input-grid">
+                <div>
+                    <label for="student-name">Nama Lengkap Siswa</label>
+                    <input type="text" id="student-name" placeholder="Contoh: Raka Pratama" required>
+                </div>
+                <div>
+                    <label for="student-class">Kelas / Kelompok</label>
+                    <input type="text" id="student-class" value="Chicago Class" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">
+                <span>Bagian A: Pilihan Ganda (10 Soal)</span>
+                <span class="q-tag">50 Poin</span>
+            </div>
+            <div id="mc-container"></div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">
+                <span>Bagian B: Terjemahan / Translation (10 Soal)</span>
+                <span class="q-tag">50 Poin</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 16px;">
+                Terjemahkan kalimat berikut ke dalam Bahasa Inggris menggunakan aturan <strong>Modal, SEOM, Passive Modal, dan Past Modal</strong> yang tepat (Kosakata B1).
+            </p>
+            <div id="trans-container"></div>
+        </div>
+
+        <button class="btn" onclick="submitExam()">Kumpulkan Jawaban &amp; Buat Link Review Tutor</button>
+
+        <div id="submission-result" class="card hidden" style="margin-top: 20px;">
+            <h3 style="color: var(--success); margin-bottom: 8px;">✅ Jawaban Berhasil Dikumpulkan!</h3>
+            <p style="font-size: 0.92rem;">Salin link pendek di bawah ini dan kirimkan kepada Tutor untuk dinilai dan diberikan feedback:</p>
+            <div class="link-box">
+                <strong>Link Review Tutor:</strong>
+                <code id="generated-link"></code>
+                <button class="btn btn-secondary" onclick="copyLink('generated-link')">Salin Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODE 2: TUTOR GRADING VIEW -->
+    <div id="tutor-view" class="hidden">
+        <div class="tutor-banner">
+            🛠️ MODE PENILAIAN TUTOR — Periksa jawaban siswa, berikan skor manual, dan buat link hasil feedback.
+        </div>
+
+        <div class="card">
+            <div class="section-title"><span>Informasi Siswa</span></div>
+            <p><strong>Nama Siswa:</strong> <span id="rev-student-name"></span></p>
+            <p><strong>Kelas:</strong> <span id="rev-student-class"></span></p>
+            <p><strong>Estimasi Skor Pilihan Ganda:</strong> <span id="auto-mc-info" style="color: var(--primary); font-weight: bold;"></span></p>
+        </div>
+
+        <div class="card">
+            <div class="section-title"><span>Penilaian Bagian A: Pilihan Ganda</span></div>
+            <div id="tutor-mc-list"></div>
+        </div>
+
+        <div class="card">
+            <div class="section-title"><span>Penilaian Bagian B: Terjemahan (Manual)</span></div>
+            <div id="tutor-trans-list"></div>
+        </div>
+
+        <div class="card">
+            <div class="section-title"><span>Catatan &amp; Feedback Keseluruhan Tutor</span></div>
+            <label for="tutor-general-feedback">Komentar Evaluasi untuk Siswa:</label>
+            <textarea id="tutor-general-feedback" rows="4" placeholder="Tuliskan evaluasi menyeluruh mengenai penguasaan modal present, past modal, dan SEOM siswa..."></textarea>
+            <div style="margin-top: 16px; font-size: 1.1rem; font-weight: 700; color: var(--primary);">
+                Total Nilai Akhir: <span id="live-total-score">0</span> / 100
+            </div>
+            <button class="btn btn-success" style="margin-top: 16px;" onclick="generateFeedbackLink()">Simpan Nilai &amp; Buat Link Hasil Siswa</button>
+
+            <div id="feedback-link-box" class="link-box hidden">
+                <strong>Link Hasil &amp; Feedback untuk Siswa:</strong>
+                <code id="student-result-link"></code>
+                <button class="btn btn-secondary" onclick="copyLink('student-result-link')">Salin Link Hasil Siswa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODE 3: FINAL RESULT VIEW (FOR STUDENT) -->
+    <div id="result-view" class="hidden">
+        <div class="result-banner">
+            <div>HASIL EVALUASI &amp; FEEDBACK TUTOR</div>
+            <div class="result-score" id="final-score-display">0 / 100</div>
+            <div id="final-student-info" style="font-size: 1rem; opacity: 0.95;"></div>
+        </div>
+
+        <div class="card">
+            <div class="section-title"><span>Feedback Tutor</span></div>
+            <p id="final-tutor-comment" style="white-space: pre-line; font-size: 1rem;"></p>
+        </div>
+
+        <div class="card">
+            <div class="section-title"><span>Rincian Jawaban &amp; Koreksi</span></div>
+            <div id="final-breakdown-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const mcQuestions = [
+        {
+            q: "Look at the dark clouds and strong wind. The flight _____ be delayed due to severe weather conditions.",
+            tag: "Modal + Be (Adjective)",
+            options: ["might", "might to", "must will", "can to"],
+            ans: 0,
+            exp: "Modal 'might' (mungkin) diikuti 'be' karena 'delayed' berfungsi sebagai kata sifat (adjective/passive)."
+        },
+        {
+            q: "Because the confidential contract had several errors, the entire document _____ before the board meeting yesterday.",
+            tag: "Past / Passive Modal",
+            options: ["must revise", "had to be revised", "must have revise", "should revised"],
+            ans: 1,
+            exp: "Bentuk lampau dari 'must' (harus) adalah 'had to', dan karena bermakna pasif ('harus direvisi'), polanya menjadi 'had to be + V3'."
+        },
+        {
+            q: "Despite facing fierce competition, our team _____ accomplish the quarterly target ahead of schedule next month.",
+            tag: "SEOM (Two Modals)",
+            options: ["will can", "must can", "will be able to", "should can"],
+            ans: 2,
+            exp: "Tidak boleh ada dua modal berdampingan ('will can' salah). Modal kedua diubah menjadi SEOM: 'be able to'."
+        },
+        {
+            q: "Sarah looks exhausted and her eyes are red. She _____ awake all night preparing her thesis presentation.",
+            tag: "Past Modal (Pasti - Lampau)",
+            options: ["must stay", "must have stayed", "had to stay", "should have stay"],
+            ans: 1,
+            exp: "Untuk menyatakan kesimpulan 'pasti' di masa lampau, gunakan 'must have + V3' (must have stayed)."
+        },
+        {
+            q: "When my grandfather lived in the countryside, he _____ five kilometers every morning without getting tired.",
+            tag: "Past Modal (Can -> Could)",
+            options: ["can walk", "could walk", "could have walked", "may walk"],
+            ans: 1,
+            exp: "Kemampuan umum di masa lampau ('bisa' di masa lalu) menggunakan 'could + bare infinitive'."
+        },
+        {
+            q: "You _____ the company vehicle without obtaining official permission from the logistics manager.",
+            tag: "SEOM / Larangan",
+            options: ["are not allowed to use", "must not to use", "may not using", "cannot to use"],
+            ans: 0,
+            exp: "SEOM untuk 'may/can' (boleh) adalah 'be allowed to'. Bentuk negatifnya 'are not allowed to use'."
+        },
+        {
+            q: "I regret arguing with my supervisor. I _____ calmer and listened to his explanation carefully.",
+            tag: "Past Modal (Seharusnya - Lampau)",
+            options: ["should remain", "should have remained", "must have remained", "had to remain"],
+            ans: 1,
+            exp: "'Seharusnya' di masa lampau (penyesalan/hal yang tidak terjadi) menggunakan 'should have + V3'."
+        },
+        {
+            q: "He _____ the museum yesterday because the building has been closed for renovation since last month.",
+            tag: "Past Modal (Tidak Mungkin - Lampau)",
+            options: ["can't visit", "couldn't have visited", "must not visit", "had not to visit"],
+            ans: 1,
+            exp: "'Tidak mungkin' di masa lampau menggunakan 'can't / couldn't / may not / might not + have + V3'."
+        },
+        {
+            q: "Since the applicant meets all the qualifications, she _____ get promoted to senior consultant next year.",
+            tag: "SEOM (Kemungkinan Besar + Harus/Akan)",
+            options: ["should be going to", "should will", "must will", "could can"],
+            ans: 0,
+            exp: "'Should' (kemungkinan besar) diikuti 'be going to' (SEOM dari 'will')."
+        },
+        {
+            q: "All safety regulations _____ strictly by every employee working inside the chemical laboratory.",
+            tag: "Passive Modal",
+            options: ["must follow", "must be followed", "must followed", "have to follow"],
+            ans: 1,
+            exp: "Kalimat pasif dengan modal menggunakan pola 'Modal + be + V3' (must be followed)."
+        }
+    ];
+
+    const transQuestions = [
+        {
+            q: "Dia pasti mau bernegosiasi dengan klien baru itu besok pagi.",
+            tag: "SEOM (Must + Will/Mau)",
+            key: "He/She must be willing to negotiate with the new client tomorrow morning."
+        },
+        {
+            q: "Kemarin aku harus membatalkan penerbanganku karena cuaca buruk.",
+            tag: "Past Modal (Had to)",
+            key: "Yesterday I had to cancel my flight because of bad weather."
+        },
+        {
+            q: "Laporan keuangan ini seharusnya diserahkan sebelum tenggat waktu.",
+            tag: "Passive Modal (Should + Be + V3)",
+            key: "This financial report should be submitted before the deadline."
+        },
+        {
+            q: "Mereka tidak mungkin mencuri dokumen rahasia itu karena mereka sedang berada di luar negeri.",
+            tag: "Past Modal (Can't/Couldn't have + V3)",
+            key: "They can't / couldn't / might not have stolen the confidential document because they were abroad."
+        },
+        {
+            q: "Ketika aku masih remaja, aku bisa memperbaiki komputer yang rusak sendiri.",
+            tag: "Past Modal (Could + Bare Infinitive)",
+            key: "When I was a teenager, I could repair/fix a broken computer by myself."
+        },
+        {
+            q: "Kamu seharusnya memperingatkanku tentang risiko investasi tersebut.",
+            tag: "Past Modal (Should have + V3)",
+            key: "You should have warned me about the risk of that investment."
+        },
+        {
+            q: "Dia mungkin bisa meyakinkan komite untuk menyetujui proposal kita.",
+            tag: "SEOM (May/Might/Could + Be able to)",
+            key: "He/She may / might / could be able to convince the committee to approve our proposal."
+        },
+        {
+            q: "Tamu undangan tidak boleh memasuki ruangan tanpa kartu identitas resmi.",
+            tag: "Passive / Prohibition Modal",
+            key: "Invited guests may not / cannot / are not allowed to enter the room without an official ID card."
+        },
+        {
+            q: "Dia pasti kelelahan setelah mengemudi selama delapan jam tanpa istirahat.",
+            tag: "Past Modal (Must have + V3 / Been)",
+            key: "He/She must have been exhausted after driving for eight hours without resting."
+        },
+        {
+            q: "Aku lebih suka tinggal di rumah daripada menghadiri pesta yang ramai itu tadi malam.",
+            tag: "Past Modal (Would rather have + V3)",
+            key: "I would rather have stayed at home than attended that crowded party last night."
+        }
+    ];
+
+    // URL-safe Unicode Base64 Encoding & Decoding for compact, short links
+    function encodePayload(obj) {
+        const json = JSON.stringify(obj);
+        const bytes = new TextEncoder().encode(json);
+        let bin = "";
+        for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+        return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function decodePayload(str) {
+        let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+        while (b64.length % 4) b64 += '=';
+        const bin = atob(b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    function renderStudentExam() {
+        const mcDiv = document.getElementById('mc-container');
+        mcQuestions.forEach((item, idx) => {
+            let optsHtml = item.options.map((opt, oIdx) => `
+                <label class="option-label">
+                    <input type="radio" name="mc_${idx}" value="${oIdx}">
+                    <span>${String.fromCharCode(65 + oIdx)}. ${opt}</span>
+                </label>
+            `).join('');
+            mcDiv.innerHTML += `
+                <div class="question-item">
+                    <div class="q-header">
+                        <span class="q-num">Soal ${idx + 1}</span>
+                        <span class="q-tag">${item.tag}</span>
+                    </div>
+                    <div class="q-text">${item.q}</div>
+                    <div class="options-list">${optsHtml}</div>
+                </div>
+            `;
+        });
+
+        const transDiv = document.getElementById('trans-container');
+        transQuestions.forEach((item, idx) => {
+            transDiv.innerHTML += `
+                <div class="question-item">
+                    <div class="q-header">
+                        <span class="q-num">Soal ${idx + 1}</span>
+                        <span class="q-tag">${item.tag}</span>
+                    </div>
+                    <div class="q-text">"${item.q}"</div>
+                    <input type="text" id="trans_${idx}" placeholder="Tulis terjemahan Bahasa Inggris di sini...">
+                </div>
+            `;
+        });
+    }
+
+    let currentSubmission = null;
+
+    function submitExam() {
+        const name = document.getElementById('student-name').value.trim();
+        if (!name) {
+            alert("Harap isi Nama Lengkap Siswa terlebih dahulu!");
+            document.getElementById('student-name').focus();
+            return;
+        }
+
+        const mcAns = [];
+        for (let i = 0; i < mcQuestions.length; i++) {
+            const selected = document.querySelector(`input[name="mc_${i}"]:checked`);
+            mcAns.push(selected ? parseInt(selected.value) : -1);
+        }
+
+        const transAns = [];
+        for (let i = 0; i < transQuestions.length; i++) {
+            transAns.push(document.getElementById(`trans_${i}`).value.trim());
+        }
+
+        // Compact payload keys: n=name, c=class, m=mcAnswers, t=transAnswers
+        const payload = { n: name, c: "Chicago Class", m: mcAns, t: transAns };
+        const hash = "#r=" + encodePayload(payload);
+        const baseUrl = window.location.href.split('#')[0];
+        const fullLink = baseUrl + hash;
+
+        document.getElementById('generated-link').textContent = fullLink;
+        document.getElementById('submission-result').classList.remove('hidden');
+        document.getElementById('submission-result').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function renderTutorView(data) {
+        currentSubmission = data;
+        document.getElementById('student-view').classList.add('hidden');
+        document.getElementById('tutor-view').classList.remove('hidden');
+
+        document.getElementById('rev-student-name').textContent = data.n;
+        document.getElementById('rev-student-class').textContent = data.c;
+
+        let autoMcScore = 0;
+        const mcList = document.getElementById('tutor-mc-list');
+        mcQuestions.forEach((item, idx) => {
+            const userChoice = data.m[idx];
+            const isCorrect = userChoice === item.ans;
+            const defaultPts = isCorrect ? 5 : 0;
+            autoMcScore += defaultPts;
+
+            const userText = userChoice >= 0 ? `${String.fromCharCode(65 + userChoice)}. ${item.options[userChoice]}` : "(Tidak dijawab)";
+            const correctText = `${String.fromCharCode(65 + item.ans)}. ${item.options[item.ans]}`;
+
+            mcList.innerHTML += `
+                <div class="question-item review-card">
+                    <div class="q-header">
+                        <span class="q-num">PG #${idx + 1} — ${item.tag}</span>
+                        <span style="font-weight:700; color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">
+                            ${isCorrect ? '✔ Benar' : '✘ Salah'}
+                        </span>
+                    </div>
+                    <div class="q-text">${item.q}</div>
+                    <div class="ans-box"><strong>Jawaban Siswa:</strong> ${userText}</div>
+                    <div class="key-box"><strong>Kunci &amp; Penjelasan:</strong> ${correctText} — <em>${item.exp}</em></div>
+                    <div class="score-control">
+                        <label>Poin (0-5):</label>
+                        <input type="number" class="tutor-score-input" id="score_mc_${idx}" min="0" max="5" step="0.5" value="${defaultPts}" oninput="updateTotalScore()">
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('auto-mc-info').textContent = `${autoMcScore} / 50 Poin`;
+
+        const transList = document.getElementById('tutor-trans-list');
+        transQuestions.forEach((item, idx) => {
+            const userTrans = data.t[idx] || "(Tidak dijawab)";
+            transList.innerHTML += `
+                <div class="question-item review-card">
+                    <div class="q-header">
+                        <span class="q-num">Translate #${idx + 1}</span>
+                        <span class="q-tag">${item.tag}</span>
+                    </div>
+                    <div class="q-text">"${item.q}"</div>
+                    <div class="ans-box"><strong>Jawaban Siswa:</strong> ${userTrans}</div>
+                    <div class="key-box"><strong>Referensi Kunci:</strong> ${item.key}</div>
+                    <div class="score-control">
+                        <label>Poin (0-5):</label>
+                        <input type="number" class="tutor-score-input" id="score_tr_${idx}" min="0" max="5" step="0.5" value="0" oninput="updateTotalScore()">
+                        <input type="text" id="note_tr_${idx}" placeholder="Catatan koreksi tutor untuk nomor ini (opsional)..." style="flex:1; min-width: 200px;">
+                    </div>
+                </div>
+            `;
+        });
+
+        updateTotalScore();
+    }
+
+    function updateTotalScore() {
+        let total = 0;
+        document.querySelectorAll('.tutor-score-input').forEach(inp => {
+            total += parseFloat(inp.value) || 0;
+        });
+        document.getElementById('live-total-score').textContent = total;
+        return total;
+    }
+
+    function generateFeedbackLink() {
+        const mcScores = [];
+        for (let i = 0; i < mcQuestions.length; i++) {
+            mcScores.push(parseFloat(document.getElementById(`score_mc_${i}`).value) || 0);
+        }
+        const trScores = [];
+        const trNotes = [];
+        for (let i = 0; i < transQuestions.length; i++) {
+            trScores.push(parseFloat(document.getElementById(`score_tr_${i}`).value) || 0);
+            trNotes.push(document.getElementById(`note_tr_${i}`).value.trim());
+        }
+
+        const feedbackData = {
+            n: currentSubmission.n,
+            c: currentSubmission.c,
+            m: currentSubmission.m,
+            t: currentSubmission.t,
+            ms: mcScores,
+            ts: trScores,
+            tn: trNotes,
+            fb: document.getElementById('tutor-general-feedback').value.trim(),
+            tot: updateTotalScore()
+        };
+
+        const hash = "#f=" + encodePayload(feedbackData);
+        const baseUrl = window.location.href.split('#')[0];
+        const finalLink = baseUrl + hash;
+
+        document.getElementById('student-result-link').textContent = finalLink;
+        document.getElementById('feedback-link-box').classList.remove('hidden');
+        document.getElementById('feedback-link-box').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function renderResultView(data) {
+        document.getElementById('student-view').classList.add('hidden');
+        document.getElementById('result-view').classList.remove('hidden');
+
+        document.getElementById('final-score-display').textContent = `${data.tot} / 100`;
+        document.getElementById('final-student-info').textContent = `${data.n} — ${data.c}`;
+        document.getElementById('final-tutor-comment').textContent = data.fb || "Bagus! Terus berlatih aturan Modal, SEOM, dan Past Modal.";
+
+        const breakdown = document.getElementById('final-breakdown-list');
+        breakdown.innerHTML += `<h4 style="margin-bottom:12px; color:var(--primary);">Bagian A: Pilihan Ganda</h4>`;
+        mcQuestions.forEach((item, idx) => {
+            const uChoice = data.m[idx];
+            const pts = data.ms[idx];
+            const userText = uChoice >= 0 ? `${String.fromCharCode(65 + uChoice)}. ${item.options[uChoice]}` : "(Kosong)";
+            const correctText = `${String.fromCharCode(65 + item.ans)}. ${item.options[item.ans]}`;
+            breakdown.innerHTML += `
+                <div class="question-item">
+                    <div class="q-header">
+                        <span class="q-num">PG #${idx + 1}</span>
+                        <span class="q-tag">${pts} / 5 Poin</span>
+                    </div>
+                    <div class="q-text">${item.q}</div>
+                    <div class="ans-box"><strong>Jawabanmu:</strong> ${userText}</div>
+                    <div class="key-box"><strong>Kunci:</strong> ${correctText} (${item.exp})</div>
+                </div>
+            `;
+        });
+
+        breakdown.innerHTML += `<h4 style="margin:20px 0 12px; color:var(--primary);">Bagian B: Terjemahan</h4>`;
+        transQuestions.forEach((item, idx) => {
+            const uTrans = data.t[idx] || "(Kosong)";
+            const pts = data.ts[idx];
+            const note = data.tn[idx];
+            breakdown.innerHTML += `
+                <div class="question-item">
+                    <div class="q-header">
+                        <span class="q-num">Translate #${idx + 1}</span>
+                        <span class="q-tag">${pts} / 5 Poin</span>
+                    </div>
+                    <div class="q-text">"${item.q}"</div>
+                    <div class="ans-box"><strong>Jawabanmu:</strong> ${uTrans}</div>
+                    <div class="key-box"><strong>Referensi Kunci:</strong> ${item.key}</div>
+                    ${note ? `<div style="color:var(--primary); font-size:0.9rem; margin-top:6px;"><strong>💬 Catatan Tutor:</strong> ${note}</div>` : ''}
+                </div>
+            `;
+        });
+    }
+
+    function copyLink(elementId) {
+        const text = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Link berhasil disalin ke clipboard!");
+        });
+    }
+
+    // Router on Load
+    window.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash;
+        if (hash.startsWith('#r=')) {
+            try {
+                const data = decodePayload(hash.substring(3));
+                renderTutorView(data);
+            } catch (e) {
+                alert("Link review tidak valid atau rusak.");
+                renderStudentExam();
+            }
+        } else if (hash.startsWith('#f=')) {
+            try {
+                const data = decodePayload(hash.substring(3));
+                renderResultView(data);
+            } catch (e) {
+                alert("Link hasil tidak valid atau rusak.");
+                renderStudentExam();
+            }
+        } else {
+            renderStudentExam();
+        }
+    });
+</script>
+</body>
+</html>
